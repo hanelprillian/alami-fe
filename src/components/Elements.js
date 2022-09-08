@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 export const Body = styled.div`
   font-family: 'Calibri';
@@ -14,9 +14,18 @@ export const Header = styled.div`
 `
 export const HeaderNavigation = styled.div`
   display: flex;
+  gap: 30px;
 `
-export const HeaderNavigationItem = styled(Link)`
+export const HeaderNavigationItem = styled(NavLink)`
   display: flex;
+  font-size: 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 400;
+
+  &.active {
+    font-weight: 700;
+  }
 `
 export const Container = styled.div`
   display: ${props => props.display ? props.display : 'block'};
