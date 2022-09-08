@@ -3,8 +3,7 @@ import {NavLink} from "react-router-dom";
 
 function responsiveSelector (props, paramName, selectorName) {
     let ret = ``
-
-    if(typeof props[paramName] === 'object' && props[paramName]) {
+    if(typeof props[paramName] === 'object') {
         if(props[paramName].sm) {
             ret += `
             @media only screen and (min-width: 200px) and (max-width: 425px) {
@@ -26,6 +25,8 @@ function responsiveSelector (props, paramName, selectorName) {
               }
               `
         }
+    } else if (typeof props[paramName] === 'string' || typeof props[paramName] === 'number'){
+        ret += `${selectorName}: ${props[paramName]}`
     }
 
     return css`${ret}`
@@ -63,17 +64,17 @@ export const Container = styled.div`
   justify-content: ${props => props.justifyContent ? props.justifyContent : 'none'};
   align-items: ${props => props.alignItems ? props.alignItems : 'none'};
   width: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
-  @media (min-width: 1024px) {
+  padding-left: 0;
+  padding-right: 0;
+  @media only screen and (min-width: 1024px) {
     width: 1024px;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 20px;
+    padding-right: 20px;
   }
-  @media (min-width: 1280px) {
+  @media only screen and (min-width: 1280px) {
     width: 1280px;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   margin: 0 auto;
 `
@@ -85,5 +86,7 @@ export const Box = styled.div`
   flex-wrap: ${props => props.flexWrap ? props.flexWrap : 'nowrap'};
 
   ${props => responsiveSelector(props,'width', 'width')}
+  ${props => responsiveSelector(props,'mt', 'margin-top')}
+  ${props => responsiveSelector(props,'mb', 'margin-bottom')}
   ${props => responsiveSelector(props,'flexWrap', 'flex-wrap')}
 `
