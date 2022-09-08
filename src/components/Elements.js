@@ -1,5 +1,35 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import {NavLink} from "react-router-dom";
+
+function responsiveSelector (props, paramName, selectorName) {
+    let ret = ``
+
+    if(typeof props[paramName] === 'object' && props[paramName]) {
+        if(props[paramName].sm) {
+            ret += `
+            @media only screen and (min-width: 200px) and (max-width: 425px) {
+              ${selectorName}: ${props[paramName].sm};
+            }
+          `
+        }
+        if(props[paramName].md) {
+            ret += `
+          @media only screen and (min-width: 1024px) {
+            ${selectorName}: ${props[paramName].md};
+          }
+        `
+        }
+        if(props[paramName].lg) {
+            ret += `
+              @media only screen and (min-width: 1440px) {
+                ${selectorName}: ${props[paramName].lg};
+              }
+              `
+        }
+    }
+
+    return css`${ret}`
+}
 
 export const Body = styled.div`
   font-family: 'Calibri';
@@ -9,7 +39,8 @@ export const Header = styled.div`
   padding: 40px;
 
   .logo {
-    font-size: 40px;
+    font-size: 50px;
+    font-weight: bold;
   }
 `
 export const HeaderNavigation = styled.div`
@@ -31,6 +62,28 @@ export const Container = styled.div`
   display: ${props => props.display ? props.display : 'block'};
   justify-content: ${props => props.justifyContent ? props.justifyContent : 'none'};
   align-items: ${props => props.alignItems ? props.alignItems : 'none'};
-  width: 1280px;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  @media (min-width: 1024px) {
+    width: 1024px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  @media (min-width: 1280px) {
+    width: 1280px;
+    padding-left: 0;
+    padding-right: 0;
+  }
   margin: 0 auto;
+`
+export const Box = styled.div`
+  display: ${props => props.display ? props.display : 'block'};
+  justify-content: ${props => props.justifyContent ? props.justifyContent : 'none'};
+  align-items: ${props => props.alignItems ? props.alignItems : 'none'};
+  gap: ${props => props.flexGap ? props.flexGap : 'none'};
+  flex-wrap: ${props => props.flexWrap ? props.flexWrap : 'nowrap'};
+
+  ${props => responsiveSelector(props,'width', 'width')}
+  ${props => responsiveSelector(props,'flexWrap', 'flex-wrap')}
 `

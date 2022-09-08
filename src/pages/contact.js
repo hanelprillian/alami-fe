@@ -1,8 +1,9 @@
+import {Container} from "../components/Elements";
 
 export default function Contact () {
     return (
-        <>
-            This is contactpage
-        </>
+        <Container>
+            <h2>CONTACT PAGE</h2>
+        </Container>
     )
 }
